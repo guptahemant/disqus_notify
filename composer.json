@@ -1,0 +1,14 @@
+{
+  "name": "drupal/disqus_notify",
+  "type": "drupal-module",
+  "description": "sends email to node authors when a comment is posted on their content through disqus",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/disqus_notify",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/disqus_notify",
+    "source": "http://cgit.drupalcode.org/disqus_notify"
+  },
+  "require": { }
+}

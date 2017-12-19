@@ -1,0 +1,4 @@
+disqus_notify:
+  enable_notifications: TRUE
+  subject: "A comment has been posted on your content"
+  email_message: "A comment has been posted on your content at [node:url]"

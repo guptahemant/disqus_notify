@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * @file
+ * Contains disqus_notify.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Asset\AttachedAssetsInterface;
+
+/**
+ * Implements hook_help().
+ */
+function disqus_notify_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the disqus_notify module.
+    case 'help.page.disqus_notify':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('sends email to node authors when a comment is posted on their content through disqus') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function disqus_notify_theme() {
+  return [
+    'disqus_notify' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function disqus_notify_element_info_alter(array &$info) {
+  // Decrease the default size of textfields.
+  if (isset($info['disqus'])) {
+    $config = \Drupal::config('disqus_notify.disqusnotifysettings');
+    if ($config->get('enable_notifications')) {
+      $info['disqus']['#attached'] = [
+        'library' => ['disqus_notify/disqus_notify'],
+      ];
+    }
+  }
+}
+
+/**
+ *
+ */
+function disqus_notify_js_alter(&$javascript, AttachedAssetsInterface $assets) {
+  // Add notify js callback here.
+  $settings = $assets->getSettings();
+  if (isset($settings['disqus'])) {
+    $config = \Drupal::config('disqus_notify.disqusnotifysettings');
+    if ($config->get('enable_notifications')) {
+      $settings['disqus']['callbacks']['onNewComment'][] = 'Drupal.disqus.notifyDisqus';
+      $assets->setSettings($settings);
+    }
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function disqus_notify_mail($key, &$message, $params) {
+  $options = array(
+    'langcode' => $message['langcode'],
+  );
+  switch ($key) {
+    case 'disqus_notify':
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['message'];
+      break;
+  }
+}

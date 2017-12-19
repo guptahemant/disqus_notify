@@ -1,0 +1,7 @@
+disqus_notify.disqus_notify_settings:
+  title: 'Disqus notify settings'
+  route_name: disqus_notify.disqus_notify_settings
+  description: 'Configure disqus notify settings'
+  parent: system.admin_config_services
+  weight: 99
+

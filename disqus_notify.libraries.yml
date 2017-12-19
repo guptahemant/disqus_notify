@@ -1,0 +1,7 @@
+disqus_notify:
+  version: 1.x
+  js:
+    disqus_notify.js: {}
+  dependencies:
+    - disqus/disqus
+

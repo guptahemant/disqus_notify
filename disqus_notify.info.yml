@@ -1,0 +1,7 @@
+name: disqus_notify
+type: module
+description: sends email to node authors when a comment is posted on their content through disqus
+core: 8.x
+package: Custom
+dependencies:
+  - disqus
