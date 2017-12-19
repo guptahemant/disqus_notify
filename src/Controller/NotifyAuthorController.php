@@ -23,7 +23,7 @@ class NotifyAuthorController extends ControllerBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(RequestStack $requestStack, MailManager $mailManager,ConfigFactoryInterface $config_factory,Token $token) {
+  public function __construct(RequestStack $requestStack, MailManager $mailManager, ConfigFactoryInterface $config_factory, Token $token) {
     $this->requestStack = $requestStack;
     $this->mailManager = $mailManager;
     $this->configFactory = $config_factory;
@@ -56,15 +56,15 @@ class NotifyAuthorController extends ControllerBase {
     $commentIdentifier = \Drupal::request()->request->get('identifier');
     $message = 'comment posted on disqus test ajax: ' . $commentId . " : " . $commentText . " : " . $commentIdentifier;
 
-    //Load the entity from identifier
+    // Load the entity from identifier.
     $identifierData = explode('/', $commentIdentifier);
     $entity_type = $identifierData[0];
     $entity = entity_load($entity_type, $identifierData[1]);
 
-    //Get the form settings
+    // Get the form settings.
     $config = $this->configFactory->get('disqus_notify.disqusnotifysettings');
 
-    //Start creating the email.
+    // Start creating the email.
     $mailManager = $this->mailManager;
     $module = 'disqus_notify';
     $key = 'disqus_notify';
